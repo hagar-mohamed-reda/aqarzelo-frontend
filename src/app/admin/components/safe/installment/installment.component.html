@@ -1,0 +1,130 @@
+<div class="modal " id="installmentSection" tabindex="-1" role="dialog"   >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content w3-animate-top">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="doc.jquery('#installmentSection').modal('hide')"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">{{ "installment" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <tr>
+            <td>
+              {{ "old balance" | trans }}
+            </td>
+            <td>
+              <input style="width: 60px" class="custom-input w3-input border-dashed input-sm" readonly [(ngModel)]="student.old_balance" >
+            </td>
+            <td>
+              {{ "current balance" | trans }}
+            </td>
+            <td>
+              <input style="width: 60px" class="custom-input w3-input border-dashed input-sm" readonly [(ngModel)]="student.current_balance" >
+            </td>
+            <td>
+              {{ "paids" | trans }}
+            </td>
+            <td>
+              <input style="width: 60px" class="custom-input w3-input border-dashed input-sm" readonly [(ngModel)]="student.paids" >
+            </td>
+          </tr>
+        </table>
+        <br>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="alert alert-warning w3-block text-center" style="padding: 4px!important;margin-bottom: 5px" >
+              {{ "old_balance" | trans }}
+            </div>
+            <table class="table table-bordered" >
+              <thead>
+                <tr class="w3-dark-gray" >
+                  <th>{{ "#" | trans }}</th>
+                  <th>{{ "value" | trans }}</th>
+                  <th>{{ "date" | trans }}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of oldInstallment index as i"    >
+                  <ng-container *ngIf='!item.deleted' >
+                      <td >{{ i + 1 }}</td>
+                      <td>
+                        <input
+                        class="form-control input-sm"
+                        (change)="calculateTotal1()"
+                        [readOnly]="item.paid == 1" style="width: 60px" [(ngModel)]="item.value" >
+                      </td>
+                      <td>
+                        <input type="date" class="form-control input-sm" [readOnly]="item.paid == 1" style="width: 150px" [(ngModel)]="item.date" >
+                      </td>
+                      <td>
+                        <button *ngIf="item.paid == 0" (click)="removeRow1(item, i)" class="btn btn-default fa fa-trash w3-text-red" ></button>
+                      </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-default fa fa-plus" [disabled]="getInstallmentType() == 'new'" (click)="addRow1()" ></button>
+            <table class="table" >
+              <tr>
+                <td>{{ "total" | trans }}</td>
+                <td></td>
+                <td></td>
+                <td>{{ total1 | currency: ' جنيه ' }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="alert alert-warning w3-block text-center" style="padding: 4px!important;margin-bottom: 5px" >
+              {{ "current_balance" | trans }}
+            </div>
+            <table class="table table-bordered" >
+              <thead>
+                <tr class="w3-dark-gray" >
+                  <th>{{ "#" | trans }}</th>
+                  <th>{{ "value" | trans }}</th>
+                  <th>{{ "date" | trans }}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of currentInstallment index as i"    >
+                  <ng-container *ngIf='!item.deleted' >
+                      <td >{{ i + 1 }}</td>
+                      <td>
+                        <input
+                        class="form-control input-sm"
+                        (change)="calculateTotal2()"
+                        [readOnly]="item.paid == 1" style="width: 60px" [(ngModel)]="item.value" >
+                      </td>
+                      <td>
+                        <input type="date" class="form-control input-sm" [readOnly]="item.paid == 1" style="width: 150px" [(ngModel)]="item.date" >
+                      </td>
+                      <td>
+                        <button *ngIf="item.paid == 0" (click)="removeRow2(item, i)" class="btn btn-default fa fa-trash w3-text-red" ></button>
+                      </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-default fa fa-plus" [disabled]="getInstallmentType() == 'old'" (click)="addRow2()" ></button>
+            <table class="table" >
+              <tr>
+                <td>{{ "total" | trans }}</td>
+                <td></td>
+                <td></td>
+                <td>{{ total2 | currency: ' جنيه ' }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mat-raised-button color="primary" class="margin-5" [disabled]="isSubmitted" (click)="performUpdate()" >
+          <i *ngIf="isSubmitted" class="fa fa-spin fa-spinner" ></i>
+          <i *ngIf="!isSubmitted">{{ "save" | trans }}</i>
+        </button>
+        <button mat-raised-button class="btn-default margin-5" (click)="doc.jquery('#installmentSection').modal('hide')" >{{ "close" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

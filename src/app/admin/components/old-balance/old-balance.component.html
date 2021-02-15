@@ -1,0 +1,39 @@
+<app-breadcrumb [breadcrumbList]="breadcrumbList"></app-breadcrumb>
+
+<div class="box box-primary material-shadow w3-white table-responsive" >
+  <div class="box-header">
+
+  </div>
+  <table  class="table table-bordered text-right">
+    <tr>
+      <td>{{ "old balance store" | trans }}</td>
+      <td>
+        <select class="form-control input-sm" [(ngModel)]="oldBalanceSetting.value" >
+          <option *ngFor="let item of stores index as i" value="{{ item.id }}" >{{ item.name }}</option>
+        </select>
+      </td>
+      <td>
+        <button mat-raised-button color="primary" [disabled]="isSubmittedOldbalance" style="margin: 5px" (click)="updateOldBalanceSetting()"  >
+          <span *ngIf="!isSubmittedOldbalance" >{{ "save" | trans }}</span>
+          <span *ngIf="isSubmittedOldbalance"  class="fa fa-spin fa-spinner" ></span>
+        </button>
+      </td>
+    </tr>
+    <tr class="hidden" >
+      <td>{{ "current term" | trans }}</td>
+      <td>
+        <select class="form-control input-sm" [(ngModel)]="termSetting.value" >
+          <option *ngFor="let item of terms index as i" value="{{ item.id }}" >{{ item.name }}</option>
+        </select>
+      </td>
+      <td>
+        <button mat-raised-button color="primary" [disabled]="isSubmittedTerm" style="margin: 5px" (click)="updateTerm()"  >
+          <span *ngIf="!isSubmittedTerm" >{{ "save" | trans }}</span>
+          <span *ngIf="isSubmittedTerm"  class="fa fa-spin fa-spinner" ></span>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+

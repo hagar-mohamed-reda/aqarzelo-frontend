@@ -1,0 +1,37 @@
+ 
+<!-- remove modal -->
+<div class="modal fade" id="updateModal" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{ "add required document" | trans }}</h4>
+        </div>
+        <div class="modal-body text-center">
+          <table class="table" >
+          <tr>
+            <th>{{ "name" | trans }} *</th>
+            <td>
+              <input type="text" class="form-control input-sm"  [(ngModel)]="resource.name" >
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "address" | trans }} *</th>
+            <td>
+              <input type="text" class="form-control input-sm"  [(ngModel)]="resource.address" >
+            </td>
+          </tr> 
+          <tr>
+            <th>{{ "notes" | trans }}</th>
+            <td>
+              <input type="text" class="form-control input-sm"  [(ngModel)]="resource.notes" >
+            </td>
+          </tr>
+          </table>
+        </div>
+        <div class="modal-footer text-center"> 
+            <button type="button" class="btn btn-default" (click)="doc.jquery('#updateModal').modal('hide')" >{{ "close" | trans }}</button>
+            <button class="btn btn-primary" [disabled]="isSubmitted" (click)="updateResource()" >{{ "save" | trans }}</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->

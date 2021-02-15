@@ -1,0 +1,102 @@
+<div class="w3-block">
+
+  <button
+  routerLink="/account/setting/worksheet/expenses"
+  permission="tree_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-tree"></i> {{  "trees" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/daily"
+  permission="expense_detail_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-dollar"></i> {{  "daily_expenses" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/incomes"
+  permission="income_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-bar-chart-o"></i> {{  "incomes" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/transformations"
+  permission="deposite_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-cc-visa"></i> {{  "deposites" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/solfa"
+  permission="solfa_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-envelope"></i> {{  "solfa" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/check"
+  permission="check_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-newspaper-o"></i> {{  "checks" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/custody"
+  permission="custody_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-handshake-o"></i> {{  "custody" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/balances"
+  permission="store_balance_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-balance-scale"></i> {{  "balances" | trans }}
+  </button>
+
+  <button
+  routerLink="/account/setting/worksheet/bank-balances"
+  permission="bank_balance_read"
+  class="w3-tiny"
+  mat-raised-button color=""
+  style="margin: 2px;border-radius: 0em;" >
+    <i class="fa fa-bank"></i> {{  "bank_balances" | trans }}
+  </button>
+
+</div>
+
+
+<div class="w3-display-container">
+  <div class="w3-display-topleft w3-padding" style="top: 150px;" >
+
+    <button mat-mini-fab class="w3-green" (click)="excel()" ><i class="fa fa-file-excel-o"></i></button>
+    <br>
+    <br>
+
+    <button mat-mini-fab class="w3-dark-gray" (click)="print()" ><i class="fa fa-print"></i></button>
+
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
+
+
+

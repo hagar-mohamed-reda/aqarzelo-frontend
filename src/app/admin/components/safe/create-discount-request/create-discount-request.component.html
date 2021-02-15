@@ -1,0 +1,87 @@
+<div class="modal fade"  id="createDiscountRequestModal"     tabindex="-1" role="dialog"   >
+  <div class="modal-dialog" role="document">
+    <div class="box box-primary modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" onclick="document.getElementById('createModal').style.display='none'"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">
+          <b >{{ "create discount request" | trans }}</b>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning w3-block text-center" style="padding: 4px!important;margin-bottom: 5px" >
+          {{ "histroy of discount" | trans }}
+        </div>
+        <table class="table">
+          <tr>
+            <th>#</th>
+            <th>{{ "discount_type" | trans }}</th>
+            <th>{{ "reason" | trans }}</th>
+            <th>{{ "student_affairs_notes" | trans }}</th>
+            <th>{{ "user" | trans }}</th>
+            <th>{{ "value" | trans }}</th>
+          </tr>
+          <tr *ngFor="let item of safeObject.discount_requests index as i" >
+             <td>{{ i + 1 }}</td>
+             <td>{{ item.discount_type? item.discount_type.name : '' }}</td>
+             <td>{{ item.reason }}</td>
+             <td>{{ item.student_affairs_notes }}</td>
+             <td>{{ item.user? item.user.name : '' }}</td>
+             <td>
+               <span  *ngIf="item.paid == 1" class="w3-text-red" >{{ item.value | currency: ' جنية ' }}</span>
+             </td>
+          </tr>
+        </table>
+
+        <ng-container *ngIf="!safeObject.can_create_discount_request" >
+          <div class="text-center w3-padding w3-large text-red" >
+            الطالب بالفعل قام بعمل طلب حصول على اعفاء من الرسوم
+          </div>
+          <br>
+          <div class="w3-center text-center" >
+            <button
+            mat-raised-button color="primary"
+            (click)="printLastReceipt()" >
+            <span  >{{ "print" | trans }}</span>
+          </button>
+          </div>
+        </ng-container>
+        <table class="table" *ngIf="safeObject.can_create_discount_request" >
+            <tr>
+              <td>
+                <b>{{ "نوع الخصم" }} *</b><br>
+                <select
+                class="form-control input-sm"
+                [(ngModel)]="item.discount_type_id">
+                  <option *ngFor="let item of discountTypes" value="{{ item.id }}">{{ item.name }}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b>{{ "ادخل سبب طلب الخصم" }} *</b><br>
+                <textarea  class="form-control input-sm"  [(ngModel)]="item.reason"  cols="30" rows="5"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b>{{ "رأى شئون الطلاب" }} *</b><br>
+                <textarea  class="form-control input-sm"  [(ngModel)]="item.student_affairs_notes"  cols="30" rows="5"></textarea>
+              </td>
+            </tr>
+        </table>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" mat-raised-button (click)="doc.jquery('#createDiscountRequestModal').modal('hide')"  >{{ "close" | trans }}</button>
+
+        <button
+          *ngIf="safeObject.can_create_discount_request"
+          mat-raised-button color="primary"
+          [disabled]="isSubmitted"
+          (click)="sendResource()" >
+          <span *ngIf="!isSubmitted" >{{ "save" | trans }}</span>
+          <span *ngIf="isSubmitted" class="fa fa-spin fa-spinner" ></span>
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

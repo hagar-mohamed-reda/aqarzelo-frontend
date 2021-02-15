@@ -1,0 +1,44 @@
+<div class="modal " id="studentServices" tabindex="-1" role="dialog"   >
+  <div class="modal-dialog modal-" role="document">
+    <div class="modal-content w3-animate-top">
+      <div class="modal-header">
+        <button type="button" class="close"  (click)="doc.jquery('#studentServices').modal('hide')" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">{{ "student services" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered" >
+          <thead>
+            <tr class="w3-dark-gray" >
+              <th>{{ "#" | trans }}</th>
+              <th>{{ "date" | trans }}</th>
+              <th>{{ "name" | trans }}</th>
+              <th>{{ "number" | trans }}</th>
+              <th>{{ "value" | trans }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of safeObject.payments index as i">
+              <tr *ngIf="item.model_type == 'service'"  >
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.model_object? item.model_object.name : '' }}</td>
+                <td>{{ item.service_count }}</td>
+                <td>{{ item.value | currency: ' جنيه ' }}</td>
+              </tr>
+            </ng-container>
+            <tr *ngIf="total > 0" >
+              <td>{{ "total" | trans }}</td>
+              <td></td>
+              <td></td>
+              <td>{{ total | currency: ' جنيه ' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="doc.jquery('#studentServices').modal('hide')"  >{{ "close" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

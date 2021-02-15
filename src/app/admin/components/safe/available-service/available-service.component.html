@@ -1,0 +1,107 @@
+<div class="w3-white material-shadow" >
+  <div class="custom-panel w3-display-container w3-round">
+    <div class="w3-border-bottom w3-border-gray w3-padding text-center" >{{ "student available services" | trans }}</div>
+    <div class="custom-panel-body"  >
+      <ng-container *ngFor="let item of services index as i">
+        <div
+        class="w3-border-bottom w3-border-gray w3-display-container"
+        style="padding: 3px" *ngIf="item.valid && item.is_in_store" >
+          <mat-slide-toggle
+          (change)="toggleService(item)"
+          [checked]="selectedServices.has(item.id)" ></mat-slide-toggle>
+          <br>
+          {{ item.name }}
+          <div class="w3-display-topleft" style="padding: 5px" >
+            {{ item.value | currency: ' EGP ' }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal " id="studentAvailableServices" tabindex="-1" role="dialog"   >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content w3-animate-top">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">{{ "student available services" | trans }}</h4>
+      </div>
+      <div class="">
+        <table class="table table-bordered text-center" >
+          <thead>
+            <tr class="w3-dark-gray" >
+              <th>{{ "#" | trans }}</th>
+              <th>{{ "name" | trans }}</th>
+              <th>{{ "additional_value" | trans }}</th>
+              <th>{{ "value" | trans }}</th>
+              <th>{{ "valid" | trans }}</th>
+              <th>{{ "reason" | trans }}</th>
+              <th>{{ "number" | trans }}</th>
+              <th>{{ "total" | trans }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+            *ngFor="let item of services index as i"
+            [ngClass]="{'w3-text-red': !item.valid}"
+             >
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.additional_value | currency: ' EGP ' }}</td>
+              <td>{{ item.value | currency: ' EGP ' }}</td>
+              <td>
+                <i *ngIf="!item.valid" class="fa fa-window-close w3-text-red" ></i>
+                <i *ngIf="item.valid" class="fa fa-check-square w3-text-green" ></i>
+              </td>
+              <td>
+                <span *ngIf="!item.valid" class="w3-text-red">
+                  {{ item.reason }}
+                </span>
+              </td>
+              <td>
+                <input
+                *ngIf="item.valid && item.copy"
+                (change)="calculateTotal()"
+                type="number"
+                class="custom-input w3-input border-bottom-dashed input-sm" [(ngModel)]="item.number" >
+              </td>
+              <td>{{ (item.value + item.additional_value) | currency: ' EGP ' }}</td>
+              <td>
+                <mat-slide-toggle
+                (change)="toggleService(item)"
+                [checked]="selectedServices.has(item.id)"
+                *ngIf="item.valid"  ></mat-slide-toggle>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>{{ "total" | trans }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{ total | currency: ' EGP ' }}</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn btn-default"  class="close" data-dismiss="modal" aria-label="Close" >{{ "close" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

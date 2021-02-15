@@ -1,0 +1,162 @@
+<div class="row">
+
+  <div class="col-md-3">
+
+    <!-- navbar list -->
+    <div class="box box-primary material-shadow">
+      <div class="box-body box-profile">
+        <img class="profile-user-img img-responsive img-circle" style="width: 60%!important" src="/assets/img/account_settings.gif" alt="User profile picture">
+
+        <h3 class="profile-username text-center">{{ "account_setting" | trans }}</h3>
+
+
+        <ul class="list-group list-group-unbordered">
+          <li class="list-group-item" permission="store_bank_read" >
+            <a href="#" routerLink='/account/setting/worksheet' >
+                <b>{{ "worksheet expenses" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-file-excel-o" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="tree_read" >
+            <a href="#" routerLink='/account/setting/trees' >
+                <b>{{ "trees" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-tree" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="bank_read" >
+            <a href="#" routerLink='/account/setting/banks' >
+                <b>{{ "banks" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-bank" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="check_read" >
+            <a href="#" routerLink='/account/setting/checks' >
+                <b>{{ "checks" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-newspaper-o" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="daily_read" >
+            <a href="#" routerLink='/account/setting/dailys' >
+                <b>{{ "dailys" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-reply" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="transformation_read" >
+            <a href="#" routerLink='/account/setting/transformations' >
+                <b>{{ "transformations" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-reply" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="service_read" >
+            <a href="#" routerLink='/account/setting/services' >
+                <b>{{ "services" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-trophy" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="safe_read" >
+            <a href="#" routerLink='/account/setting/stores' >
+                <b>{{ "stores" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-bank" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="academic_expense_read" >
+            <a href="#" routerLink='/account/setting/academic_year_expenses' >
+                <b>{{ "academic_year_expenses" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-money" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="discount_type_read" >
+            <a href="#" routerLink='/account/setting/discount_types' >
+                <b>{{ "discount_types" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-percent" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="account_setting" >
+            <a href="#" routerLink='/account/setting/s' >
+                <b>{{ "general settings" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-cogs" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="payment_detail_report" >
+            <a href="#" routerLink='/account/report/payment-details/' >
+                <b>{{ "students payments report" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-line-chart" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="student_detail_report" >
+            <a href="#" routerLink='/account/report/student-details/' >
+                <b>{{ "students details report" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-line-chart" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="student_balance_report" >
+            <a href="#" routerLink='/account/report/student-balances/' >
+                <b>{{ "students balances report" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-line-chart" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="report_creator_report" >
+            <a href="#" routerLink='/account/report/report-creator' >
+                <b>{{ "report creator" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-line-chart" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="installment_report" >
+            <a href="#" routerLink='/account/report/student-installment' >
+                <b>{{ "students installment report" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-line-chart" ></i>
+                </a>
+            </a>
+          </li>
+          <li class="list-group-item" permission="student_discount_report" >
+            <a href="#" routerLink='/account/report/student-discount' >
+                <b>{{ "students discount report" | trans }}</b>
+                <a href="#"  class="pull-left">
+                  <i class="fa fa-line-chart" ></i>
+                </a>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+  </div>
+  <!-- /.col -->
+  <div class="col-md-9">
+      <router-outlet></router-outlet>
+  </div>
+  <!-- /.col -->
+</div>

@@ -1,0 +1,47 @@
+<div class="modal " id="studentRefundPayments" tabindex="-1" role="dialog"   >
+  <div class="modal-dialog modal-" role="document">
+    <div class="modal-content w3-animate-top">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="doc.jquery('#studentRefundPayments').modal('hide')"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">{{ "payments" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <table  class="table table-bordered" >
+          <thead>
+            <tr class="w3-dark-gray" >
+              <th>{{ "date" | trans }}</th>
+              <th>{{ "store" | trans }}</th>
+              <th>{{ "value" | trans }}</th>
+              <th>{{ "type" | trans }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of prePayments(payments) index as i" >
+              <ng-container  >
+                <td>{{ item.date }}</td>
+                <td>{{ item.store? item.store.name : '' }}</td>
+                <td>{{ item.value | currency: ' EGP ' }}</td>
+                <td>{{ item.model_object? item.model_object.name : '' }}</td>
+                <td>
+                  <button
+                  *ngIf="!item.is_refund"
+                  (click)="performRefund(item)"
+                  [disabled]="isSubmitted"
+                  class="btn btn-danger btn-sm fa fa-replay material-shadow"  >
+                    <i *ngIf="isSubmitted"  class="fa fa-spin fa-spinner"></i>
+                    <i>{{ "pay_refund" | trans }}</i>
+                  </button>
+                  <p *ngIf="item.is_refund" class="w3-text-red">{{ "payment refunded" | trans }}</p>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default"  (click)="doc.jquery('#studentRefundPayments').modal('hide')" >{{ "close" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

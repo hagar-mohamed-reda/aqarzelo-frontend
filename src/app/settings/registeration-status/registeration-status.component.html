@@ -1,0 +1,164 @@
+<div class="box box-default">
+  <div class="box-body">
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" (click)="create()">
+      اضافة حالة تقديم
+    </button>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="requiredDocumentModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ "assign required document" }}</h4>
+      </div>
+      <div class="box box-primary">
+          <div class="box-body">
+             <ul class="w3-ul">
+              <li *ngFor="let item of requiredDocuments" >
+                <div class="media">
+                  <div class="media-left">
+                    <mat-slide-toggle
+                      [checked]="requiredDocumentId.has(item.id)"
+                      (change)="toggleRequiredDocument(item.id)" ></mat-slide-toggle>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">{{ item.name }}</h4>
+                    <p>
+                      {{ item.notes }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+             </ul>
+          </div>
+          <div class="box-footer">
+            <button [disabled]="requiredDocumentSubmitted" (click)="updateRequiredDocument()" type="submit" class="btn btn-primary">
+              <i *ngIf="!requiredDocumentSubmitted" >{{ "add" | trans }}</i>
+              <i *ngIf="requiredDocumentSubmitted" class="fa fa-spin fa-spinner" ></i>
+            </button>
+            &nbsp;
+            <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">{{ "cancel" | trans }}</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">اضافة حالة تقديم</h4>
+      </div>
+      <div class="box box-primary">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">{{ 'name' | trans }} *</label>
+              <input  type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="addItem.name"
+                placeholder="{{ 'name' | trans }}">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">{{ 'notes' | trans }}</label>
+              <textarea  type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="addItem.notes"
+                placeholder="{{ 'notes' | trans }}">
+                </textarea>
+
+            </div>
+          </div>
+          <div class="box-footer">
+            <button [disabled]="storeSubmitted" (click)="store()" class="btn btn-primary">
+              <i *ngIf="!storeSubmitted" >{{ "add" | trans }}</i>
+              <i *ngIf="storeSubmitted" class="fa fa-spin fa-spinner" ></i>
+            </button>
+            &nbsp;
+            <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">{{ "cancel" | trans }}</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="editModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">تعديل حالة تقديم</h4>
+      </div>
+      <div class="box box-primary">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">{{ 'name' | trans }} *</label>
+              <input  type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="editItem.name"
+                placeholder="{{ 'name' | trans }}">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">{{ 'notes' | trans }}</label>
+              <textarea  type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="editItem.notes"
+                placeholder="{{ 'notes' | trans }}">
+                </textarea>
+
+            </div>
+          </div>
+          <div class="box-footer">
+            <button [disabled]="updateSubmitted" (click)="update()" type="submit" class="btn btn-primary">
+              <i *ngIf="!updateSubmitted" >{{ "add" | trans }}</i>
+              <i *ngIf="updateSubmitted" class="fa fa-spin fa-spinner" ></i>
+            </button>
+            &nbsp;
+            <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">{{ "cancel" | trans }}</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="">
+  <!--
+  <input type="text" class="w3-input w3-block" #input (keyup)="search(input.value, table)" placeholder="{{ 'search' | trans }}" >
+  -->
+  <table  class="table table-bordered w3-card w3-padding w3-white" #table >
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>الاسم</th>
+        <th>الاوراق المطلوبة</th>
+        <th>ملاحظات</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ row.name }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let row of row.required_document_names">{{ row }}</li>
+          </ul>
+        </td>
+        <td>{{ row.notes }}</td>
+        <td>
+          <i class="fa fa-edit btn w3-text-orange" (click)="edit(row)"  ></i>
+
+          <i class="fa fa-newspaper-o btn w3-text-green" title="{{'assign required documents' | trans}}" (click)="displayRequiredDocument(row)" ></i>
+
+          <i class="fa fa-trash btn w2-text-red" *ngIf="row.can_delete"  (click)="destroy(row.id)"></i>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

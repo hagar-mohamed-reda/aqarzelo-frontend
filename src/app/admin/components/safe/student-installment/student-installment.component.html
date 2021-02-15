@@ -1,0 +1,30 @@
+<div class="modal " id="studentInstallment" tabindex="-1" role="dialog"   >
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content w3-animate-top">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="doc.jquery('#studentInstallment').modal('hide')" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">{{ "student installments" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="w3-ul" >
+          <li *ngFor="let item of installments index as i" class="row" >
+            <span>{{ i + 1 }}) {{ item.date }}</span>
+            <input type="text" style="border: none;outline: none;background: transparent;border-bottom: 2px dashed gray;width: 50px;padding-left: 10px;padding-right: 10px"  readonly >
+            <span class="w3-text-red">{{ item.value | currency }} جنيه</span>
+          </li>
+          <br>
+          <br>
+          <li class="row" *ngIf="total > 0" >
+            <span>{{ "total" | trans }}</span>
+            <input type="text" style="border: none;outline: none;background: transparent;border-bottom: 2px dashed gray;width: 50px;padding-left: 10px;padding-right: 10px"  readonly >
+            <span class="w3-text-red">{{ total | currency }} جنيه</span>
+          </li>
+
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="doc.jquery('#studentInstallment').modal('hide')"  >{{ "close" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

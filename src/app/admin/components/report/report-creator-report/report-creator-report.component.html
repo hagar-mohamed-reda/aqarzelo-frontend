@@ -1,0 +1,480 @@
+<div class="material-shadow w3-padding w3-white" [style.height]="calculateReportHeight()"  >
+
+  <div class="row">
+
+    <div class="col-lg-1 col-md-1 col-sm-2" style="padding: 0px!important">
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+
+        <div class="custom-panel-body w3-center text-center"  >
+
+          <button
+                mat-raised-button color="primary"
+                class="w3-block w3-display-container gray-button w3-text-black"
+                style="margin-bottom: 5px;"
+                (click)="loadData()" >
+                <i class="fa fa-refresh w3-left" style="padding-top: 10px" ></i>  <span class="w3-right" >{{ "update" | trans }}</span>
+              </button>
+
+          <button
+                mat-raised-button color="primary"
+                class="w3-block w3-display-container w3-black"
+                style="margin-bottom: 5px;"
+                (click)="print()" >
+                <i class="fa fa-print w3-left" style="padding-top: 10px" ></i> <span class="w3-right" >{{ "print" | trans }}</span>
+              </button>
+
+          <button
+                mat-raised-button color="primary"
+                class="w3-block w3-display-container w3-green"
+                style="margin-bottom: 5px;"
+                (click)="exportExcel()" >
+                <i class="fa fa-file-excel-o w3-left" style="padding-top: 10px" ></i>  <span class="w3-right" >{{ "excel" | trans }}</span>
+              </button>
+
+          <button
+              mat-raised-button color="primary"
+              class="w3-block w3-display-container"
+              style="margin-bottom: 5px;"
+              (click)="showSelectConditionModal()" >
+              <i class="fa fa-th-list w3-left" style="padding-top: 10px" ></i>  <span class="w3-right" >{{ "select conditions" | trans }}</span>
+            </button>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-lg-11 col-md-11 col-sm-10" style="padding: 2px!important" >
+      <div class="label w3-pale-red w3-block w3-large text-right" >{{ "report creator" | trans }}</div>
+      <br>
+
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+        <div class="custom-panel-title" >{{ "student search" | trans }}</div>
+        <div class="custom-panel-body w3-display-container"  >
+          <input class="w3-round-xxlarge w3-white w3-input border-gray search-input "
+          style="width: 100%!important"
+          (keyup)="searchInputEvent()"
+          placeholder="{{ 'search with student name code national_id' | trans }}"
+          [(ngModel)]="searchKey" >
+
+          <div class="w3-display-topleft w3-padding"
+          (click)="selectStudent({})"
+          *ngIf="searchKey && !studentSearchDialogLoader" style="top: 12px;left:5%;z-index:10;" >
+            <span class="fa fa-close w3-text-red"  ></span>
+          </div>
+
+          <div class="w3-display-topleft w3-padding" *ngIf="studentSearchDialogLoader" style="top: 12px;left:5%;z-index:10;" >
+            <span class="fa fa-spin fa-spinner w3-text-indigo" ></span>
+          </div>
+
+
+          <div class="w3-display-topright w3-white material-shadow" *ngIf="studentSearchDialogShow" style="top: 47px;right:11px;z-index:10;width: 100%" >
+            <div class="w3-display-conitainer">
+              <span class="w3-display-topright w3-button fa fa-close" (click)="studentSearchDialogShow=false" ></span>
+              <br>
+              <ul class="w3-ul" >
+                <li *ngFor="let item of students" style="cursor: pointer;" class="w3-hover-light-gray w3-block text-right"  >
+                  <div class="media" (click)="selectStudent(item)" >
+                    <div class="media-left">
+                      <a href="#">
+                        <img [src]="item.image" style="width: 30px;height: 30px;" class="w3-circle" alt="">
+                        <!--
+                        <span class="fa fa-user-circle w3-text-indigo w3-large" ></span>
+                        -->
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading" [innerHTML]="item.name" ></h4>
+                      <span [innerHTML]="item.code" class="w3-large" ></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+            <div class="custom-panel-title" >{{ "levels" | trans }}</div>
+            <div class="custom-panel-body"  >
+              <ul class="w3-ul">
+                <li *ngFor="let item of levels index as i" class="w3-display-container" >
+                  <mat-slide-toggle
+                  (change)="toggle(item.id, selectedLevels);"
+                  [checked]="selectedLevels.has(item.id)"
+                   ></mat-slide-toggle>
+                  <span style="padding-right: 3px"    >{{ item.name }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+            <div class="custom-panel-title" >{{ "divisions" | trans }}</div>
+            <div class="custom-panel-body"  >
+              <ul class="w3-ul">
+                <li *ngFor="let item of divisions index as i" class="w3-display-container" >
+                  <mat-slide-toggle
+                  (change)="toggle(item.id, selectedDivisions);"
+                  [checked]="selectedDivisions.has(item.id)"
+                   ></mat-slide-toggle>
+                  <span style="padding-right: 3px"  >{{ item.name }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+            <div class="custom-panel-title" >{{ "academic years" | trans }}</div>
+            <div class="custom-panel-body"  >
+              <ul class="w3-ul">
+                <li *ngFor="let item of academicYears index as i" class="w3-display-container" >
+                  <mat-slide-toggle
+                  (change)="toggle(item.id, selectedAcademicYears);"
+                  [checked]="selectedAcademicYears.has(item.id)"
+                   ></mat-slide-toggle>
+                  <span style="padding-right: 3px"  >{{ item.name }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+            <div class="custom-panel-title" >{{ "academic year expense" | trans }}</div>
+            <div class="custom-panel-body"  >
+              <ul class="w3-ul">
+                <li *ngFor="let item of academicYearExpenses index as i" class="w3-display-container" >
+                  <mat-slide-toggle
+                  (change)="toggle(item.id, selectedAcademicYearsExpenses);"
+                  [checked]="selectedAcademicYearsExpenses.has(item.id)"
+                   ></mat-slide-toggle>
+                  <span style="padding-right: 3px"  >{{ item.name }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+            <div class="custom-panel-title" >{{ "filters" | trans }}</div>
+            <div class="custom-panel-body" style="padding: 0px!important"  >
+              <table class="w3-table filter-table" >
+                <tr class="w3-light-gray" >
+                  <th><div style="width: 100px">{{ "البيان" }}</div></th>
+                  <th>{{ "من" }}</th>
+                  <th>{{ "الى" }}</th>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="width: 100px">
+                      <mat-slide-toggle
+                  (change)="searchData.is_current_balance = searchData.is_current_balance? false : true"
+                  [checked]="searchData.is_current_balance"
+                   ></mat-slide-toggle>
+                    {{ "مطالبة" }}</div>
+                  </td>
+                  <td><input type="number" [(ngModel)]="searchData.current_balance_from"  ></td>
+                  <td><input type="number" [(ngModel)]="searchData.current_balance_to"  ></td>
+                </tr>
+                <tr>
+                  <td><div style="width: 100px">
+                    <mat-slide-toggle
+                (change)="searchData.is_paids = searchData.is_paids? false : true"
+                [checked]="searchData.is_paids"
+                 ></mat-slide-toggle>{{ "مسدد" }}</div></td>
+                  <td><input type="number" [(ngModel)]="searchData.paids_from"  ></td>
+                  <td><input type="number" [(ngModel)]="searchData.paids_to"  ></td>
+                </tr>
+                <tr>
+                  <td><div style="width: 100px">
+                    <mat-slide-toggle
+                (change)="searchData.is_paids = searchData.is_paids? false : true"
+                [checked]="searchData.is_paids"
+                 ></mat-slide-toggle>{{ "خصم" }}</div></td>
+                  <td><input type="number" [(ngModel)]="searchData.discount_from"  ></td>
+                  <td><input type="number" [(ngModel)]="searchData.discount_to"  ></td>
+                </tr>
+                <tr>
+                  <td><div style="width: 100px">
+                    <mat-slide-toggle
+                (change)="searchData.is_refund = searchData.is_refund? false : true"
+                [checked]="searchData.is_refund"
+                 ></mat-slide-toggle>{{ "رد رسوم" }}</div></td>
+                  <td><input type="number" [(ngModel)]="searchData.refund_from"  ></td>
+                  <td><input type="number" [(ngModel)]="searchData.refund_to"  ></td>
+                </tr>
+                <tr>
+                  <td><div style="width: 100px">
+                    <mat-slide-toggle
+                (change)="searchData.is_balance = searchData.is_balance? false : true"
+                [checked]="searchData.is_balance"
+                 ></mat-slide-toggle>{{ "رصيد" }}</div></td>
+                  <td><input type="number" [(ngModel)]="searchData.balance_from"  ></td>
+                  <td><input type="number" [(ngModel)]="searchData.balance_to"  ></td>
+                </tr>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+        <div class="custom-panel-title" >{{ "student info" | trans }}</div>
+        <div class="custom-panel-body w3-display-container" style="height: 340px;overflow: auto;">
+          <table class="table table-bordered"
+
+          id="printable" style="direction: rtl!important;width: 100%" >
+            <thead>
+              <tr>
+                <th>{{ "#" }}</th>
+                <th>{{ "code" | trans }}</th>
+                <th>{{ "name" | trans }}</th>
+                <th>{{ "level" | trans }}</th>
+                <th>{{ "division" | trans }}</th>
+                <th>{{ "old_balance" | trans }}</th>
+                <th>{{ "current_balance" | trans }}</th>
+                <th>{{ "paids" | trans }}</th>
+                <th>{{ "refund" | trans }}</th>
+                <th>{{ "discount" | trans }}</th>
+                <th>{{ "discount_percent" | trans }}</th>
+                <th>{{ "student_balance" | trans }}</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let item of response.details index as i"  >
+
+                  <ng-container *ngIf="!isSearching">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.level? item.level.name : '' }}</td>
+                    <td>{{ item.division? item.division.name : '' }}</td>
+                    <td>{{ item.old_balance }}</td>
+                    <td>{{ item.current_balance }}</td>
+                    <td>{{ item.paids }}</td>
+                    <td>{{ item.refund_total }}</td>
+                    <td>{{ item.discount_total }}</td>
+                    <td>{{ (item.discount_total / item.student_balance) * 100 | percent }}</td>
+                    <td>{{ item.student_balance }}</td>
+                  </ng-container>
+
+              </tr>
+            </tbody>
+
+
+
+            <tr *ngIf="isSearching">
+              <th colspan="11" >
+                <div class="text-center"><b><i class="fa fa-spin fa-refresh"></i> {{ "please_wait" | trans }}</b></div>
+              </th>
+            </tr>
+
+            <tr *ngIf="!isSearching && response.details.length <= 0">
+              <th colspan="11" >
+                <div class="text-center"><b><i class="fa fa-search"></i> {{ "no data available" | trans }}</b></div>
+              </th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+        <div class="custom-panel-title" >{{ "balance info" | trans }}</div>
+        <div class="custom-panel-body w3-display-container"  >
+          <table class="table">
+            <tr>
+              <td>
+                <b>{{ "old_balance" | trans  }}</b> : {{ response.old_balance }}
+              </td>
+              <td>
+                <b>{{ "current_balance" | trans  }}</b> : {{ response.current_balance }}
+              </td>
+              <td>
+                <b>{{ "paids" | trans  }}</b> : {{ response.paids }}
+              </td>
+              <td>
+                <b>{{ "refund" | trans  }}</b> : {{ response.refund }}
+              </td>
+              <td>
+                <b>{{ "discount" | trans  }}</b> : {{ response.discount }}
+              </td>
+              <td>
+                <b>{{ "student_balance" | trans  }}</b> : {{ response.current_balance }}
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <b>{{ "student_count" | trans  }}</b> : {{ response.details.length }}
+              </td>
+              <td>
+                <b>{{ "remind_total" | trans  }}</b> : {{ response.remind }}
+              </td>
+              <td>
+                <b>{{ "old_balance_percent" | trans  }}</b> : {{ response.old_balance_percent | percent }}
+              </td>
+              <td>
+                <b>{{ "current_balance_percent" | trans  }}</b> : {{ response.current_balance_percent | percent }}
+              </td>
+              <td>
+                <b>{{ "paids_percent" | trans  }}</b> : {{ response.paids_percent | percent }}
+              </td>
+              <td>
+                <b>{{ "refund_percent" | trans  }}</b> : {{ response.refund_percent | percent }}
+              </td>
+              <td>
+                <b>{{ "discount_percent" | trans  }}</b> : {{ response.discount_percent | percent }}
+              </td>
+            </tr>
+
+
+          </table>
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="modal fade"  id="conditionModal"  role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="box box-primary modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">
+          {{ "select conditions" | trans }}
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+              <div class="custom-panel-title" >{{ "services" | trans }}</div>
+              <div class="custom-panel-body w3-display-container"  >
+                <ul class="w3-ul">
+                  <li *ngFor="let item of services index as i" class="w3-display-container" >
+                    <mat-slide-toggle
+                    (change)="toggle(item.id, selectedServices);"
+                    [checked]="selectedServices.has(item.id)"
+                     ></mat-slide-toggle>
+                    <span style="padding-right: 3px"    >{{ item.name }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+              <div class="custom-panel-title" >{{ "registeration_status" | trans }}</div>
+              <div class="custom-panel-body w3-display-container"  >
+                <ul class="w3-ul">
+                  <li *ngFor="let item of registerationStatus index as i" class="w3-display-container" >
+                    <mat-slide-toggle
+                    (change)="toggle(item.id, selectedRegisterationStatus);"
+                    [checked]="selectedRegisterationStatus.has(item.id)"
+                     ></mat-slide-toggle>
+                    <span style="padding-right: 3px"    >{{ item.name }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-12">
+
+            <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+              <div class="custom-panel-title" >{{ "case_constraints" | trans }}</div>
+              <div class="custom-panel-body w3-display-container"  >
+                <ul class="w3-ul">
+                  <li *ngFor="let item of caseConstraints index as i" class="w3-display-container" >
+                    <mat-slide-toggle
+                    (change)="toggle(item.id, selectedCaseConstraints);"
+                    [checked]="selectedCaseConstraints.has(item.id)"
+                     ></mat-slide-toggle>
+                    <span style="padding-right: 3px"    >{{ item.name }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+              <div class="custom-panel-title" >{{ "acceptance" | trans }}</div>
+              <div class="custom-panel-body w3-display-container"  >
+                <ul class="w3-ul">
+                  <li  class="w3-display-container" >
+                    <mat-slide-toggle
+                    (change)="toggle('has_acceptance', selectedAcceptance);"
+                    [checked]="selectedAcceptance.has('has_acceptance')"
+                     ></mat-slide-toggle>
+                    <span style="padding-right: 3px"    >{{ 'has_acceptance' | trans }}</span>
+                  </li>
+                  <li  class="w3-display-container" >
+                    <mat-slide-toggle
+                    (change)="toggle('not_has_acceptance', selectedAcceptance);"
+                    [checked]="selectedAcceptance.has('not_has_acceptance')"
+                     ></mat-slide-toggle>
+                    <span style="padding-right: 3px"    >{{ 'not_has_acceptance' | trans }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+              <div class="custom-panel-title" >{{ "per_period" | trans }}</div>
+              <div class="custom-panel-body w3-display-container"  >
+                <ul class="w3-ul">
+                  <li  class="w3-display-container" >
+                    <label for="">{{ "date_from" | trans }}</label>
+                    <input type="date" [(ngModel)]="searchData.date_from" class="round-input" >
+                  </li>
+                  <li  class="w3-display-container" >
+                    <label for="">{{ "date_to" | trans }}</label>
+                    <input type="date" [(ngModel)]="searchData.date_to" class="round-input" >
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" mat-raised-button  data-dismiss="modal"  aria-label="Close" >{{ "close" | trans }}</button>
+
+        <button
+          mat-raised-button color="primary"  data-dismiss="modal"  aria-label="Close"
+          (click)="loadData()" >
+          <span  >{{ "continue" | trans }}</span>
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+

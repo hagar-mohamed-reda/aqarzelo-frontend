@@ -1,0 +1,41 @@
+<div class="modal fade" id="importExcelModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-center"  style="background-color: #cdffc0;"  >
+      <div class="modal-header w3-border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ "import excel file" | trans }}</h4>
+      </div>
+      <div class="modal-body w3-border-0">
+        <button mat-raised-button style="border-radius: 5em;" (click)="$(importFile).click()" >{{ "upload file" | trans }}</button>
+        <br>
+        <b *ngIf="resource.file" >{{ resource.file? resource.file.name : '' }}</b>
+        <input type="file" class="import_file hidden" #importFile (change)="loadFile($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"  >
+
+        <br>
+        <div style="max-height: 300px; overflow: auto;" >
+          <br>
+          <table class="table table-bordered" >
+            <tr *ngFor="let row of excelRows index as i" class="{{ i == 0? 'w3-black' : '' }}" >
+              <td  *ngFor="let col of row" >
+                {{ col }}
+              </td>
+            </tr>
+          </table>
+          <br>
+        </div>
+      </div>
+      <div class="modal-footer w3-border-0 text-center w3-center">
+        <button type="button" mat-raised-button data-dismiss="modal" style="margin: 5px" >{{ "close" | trans }}</button>
+        <button type="button"
+        class="w3-indigo"
+        [disabled]="isSubmitted"
+        mat-raised-button
+        (click)="sendFile()"
+        style="margin: 5px" >
+          <span *ngIf="!isSubmitted" >{{ "send file" | trans }}</span>
+          <span *ngIf="isSubmitted" class="fa fa-spin fa-spinner" ></span>
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,85 @@
+<div class="modal fade"  id="createBalanceResetModal"      tabindex="-1" role="dialog"   >
+  <div class="modal-dialog" role="document">
+    <div class="box box-primary modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  data-dismiss="modal" aria-label="Close"  ><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">
+          <b >{{ "create balance reset" | trans }}</b>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning w3-block text-center" style="padding: 4px!important;margin-bottom: 5px" >
+          {{ "histroy of balance reset" | trans }}
+        </div>
+        <table class="table">
+          <tr>
+            <th>#</th>
+            <th>{{ "date" | trans }}</th>
+            <th>{{ "value" | trans }}</th>
+            <th>{{ "user" | trans }}</th>
+            <th>{{ "type" | trans }}</th>
+            <th>{{ "notes" | trans }}</th>
+          </tr>
+          <tr *ngFor="let item of safeObject.balance_resets index as i" >
+             <td>{{ i + 1 }}</td>
+             <td>{{ item.date }}</td>
+             <td><span class="w3-text-red" >{{ item.value | currency: ' جنية ' }}</span></td>
+             <td>{{ item.user? item.user.name : '' }}</td>
+             <td>{{ item.type | trans }}</td>
+             <td>{{ item.notes }}</td>
+          </tr>
+        </table>
+        <div class="w3-block" style="border-bottom: 2px dashed gray" ></div>
+        <ng-container  *ngIf="!canCreateBalanceReset()" >
+          <div class="text-center w3-padding w3-large text-red" >
+            الطالب ليس علية رسوم مستحقة
+          </div>
+          <br>
+        </ng-container>
+
+        <table class="table" *ngIf="canCreateBalanceReset()" >
+          <tr>
+            <th>{{ "student" | trans }}</th>
+            <td>{{ safeObject.name }}</td>
+            <th>{{ "user" | trans }}</th>
+            <td>{{ user.name }}</td>
+          </tr>
+          <tr>
+            <th>{{ "date" | trans }}</th>
+            <td>{{ item.date }}</td>
+            <th> </th>
+            <td> </td>
+          </tr>
+        </table>
+        <table class="table" *ngIf="canCreateBalanceReset()"  >
+            <tr>
+              <td>
+                <b>{{ "value" | trans }} *</b><br>
+                <input type="number"
+                class="form-control input-sm"
+                [(ngModel)]="item.value">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b>{{ "notes" | trans }} </b><br>
+                <textarea  class="form-control input-sm"  [(ngModel)]="item.notes"  cols="30" rows="5"></textarea>
+              </td>
+            </tr>
+        </table>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" mat-raised-button data-dismiss="modal" aria-label="Close" >{{ "close" | trans }}</button>
+
+        <button
+          *ngIf="canCreateBalanceReset()"
+          mat-raised-button color="primary"
+          [disabled]="isSubmitted"
+          (click)="sendResource()" >
+          <span *ngIf="!isSubmitted" >{{ "save" | trans }}</span>
+          <span *ngIf="isSubmitted" class="fa fa-spin fa-spinner" ></span>
+        </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

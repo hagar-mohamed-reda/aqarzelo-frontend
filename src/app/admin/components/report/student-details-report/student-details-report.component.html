@@ -1,0 +1,382 @@
+<div class="material-shadow w3-padding w3-white" [style.height]="calculateReportHeight()"  >
+
+  <div class="row">
+
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <img [src]="student.image" class="w3-block w3-round border-gray" style="height: 10vw;" >
+      <br>
+
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+
+        <div class="custom-panel-body w3-center text-center"  >
+          <button
+                mat-raised-button color="primary"
+                class="w3-margin-bottom w3-block w3-display-container"
+                (click)="print()" >
+                <i class="fa fa-print w3-left" style="padding-top: 10px" ></i> <span class="w3-right" >{{ "print" | trans }}</span>
+              </button>
+
+          <button
+                mat-raised-button color="primary"
+                class="w3-margin-bottom w3-block w3-display-container"
+                (click)="exportExcel()" >
+                <i class="fa fa-file-excel-o w3-left" style="padding-top: 10px" ></i>  <span class="w3-right" >{{ "excel" | trans }}</span>
+              </button>
+
+          <button
+                mat-raised-button color="primary"
+                class="w3-margin-bottom w3-block w3-display-container"
+                (click)="showDiscountRequestModal()" >
+                <i class="fa fa-percent w3-left" style="padding-top: 10px" ></i>  <span class="w3-right" >{{ "register discount requests" | trans }}</span>
+              </button>
+
+          <button
+                mat-raised-button color="primary"
+                class="w3-margin-bottom w3-block w3-display-container"
+                (click)="showStudentServiceModal()" >
+                <i class="fa fa-trophy w3-left" style="padding-top: 10px" ></i>  <span class="w3-right" >{{ "student services" | trans }}</span>
+              </button>
+
+          <button
+                mat-raised-button color="primary"
+                class="w3-margin-bottom w3-block w3-display-container"
+                [routerLink]="['/student/show/', student.id]" >
+                <i class="fa fa-users w3-left" style="padding-top: 10px" ></i>  <span class="w3-right" >{{ "profile" | trans }}</span>
+              </button>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-10 col-md-10 col-sm-10">
+      <div class="label w3-pale-red w3-block w3-large text-right" >{{ "students details report" | trans }}</div>
+      <br>
+
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+        <div class="custom-panel-title" >{{ "student search" | trans }}</div>
+        <div class="custom-panel-body w3-display-container"  >
+          <input class="w3-round-xxlarge w3-white w3-input border-gray search-input "
+          style="width: 100%!important"
+          (keyup)="searchInputEvent()"
+          placeholder="{{ 'search with student name code national_id' | trans }}"
+          [(ngModel)]="searchKey" >
+
+          <div class="w3-display-topleft w3-padding"
+          (click)="selectStudent({})"
+          *ngIf="searchKey && !studentSearchDialogLoader" style="top: 12px;left:5%;z-index:10;" >
+            <span class="fa fa-close w3-text-red"  ></span>
+          </div>
+
+          <div class="w3-display-topleft w3-padding" *ngIf="studentSearchDialogLoader" style="top: 12px;left:5%;z-index:10;" >
+            <span class="fa fa-spin fa-spinner w3-text-indigo" ></span>
+          </div>
+
+
+          <div class="w3-display-topright w3-white material-shadow" *ngIf="studentSearchDialogShow" style="top: 47px;right:11px;z-index:10;width: 100%" >
+            <div class="w3-display-conitainer">
+              <span class="w3-display-topright w3-button fa fa-close" (click)="studentSearchDialogShow=false" ></span>
+              <br>
+              <ul class="w3-ul" >
+                <li *ngFor="let item of students" style="cursor: pointer;" class="w3-hover-light-gray w3-block text-right"  >
+                  <div class="media" (click)="selectStudent(item)" >
+                    <div class="media-left">
+                      <a href="#">
+                        <img [src]="item.image" style="width: 30px;height: 30px;" class="w3-circle" alt="">
+                        <!--
+                        <span class="fa fa-user-circle w3-text-indigo w3-large" ></span>
+                        -->
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading" [innerHTML]="item.name" ></h4>
+                      <span [innerHTML]="item.code" class="w3-large" ></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+        <div class="custom-panel-title" >{{ "student info" | trans }}</div>
+        <div class="custom-panel-body w3-display-container"  >
+          <table class="table">
+            <tr>
+              <td>
+                <b>{{ "student name" | trans  }}</b> : {{ student.name }}
+              </td>
+              <td>
+                <b>{{ "level" | trans  }}</b> : {{ student.level? student.level.name : '' }}
+              </td>
+              <td>
+                <b>{{ "division" | trans  }}</b> : {{ student.division? student.division.name : '' }}
+              </td>
+              <td>
+                <b>{{ "constraint status" | trans }}</b> : {{ student.registeration_status? student.registeration_status.name : '' }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b>{{ "nationality" | trans  }}</b> : {{ student.nationality? student.nationality.name : '' }}
+              </td>
+              <td>
+                <b>{{ "case constraint" | trans  }}</b> : {{ student.case_constraint? student.case_constraint.name : '' }}
+              </td>
+              <td>
+                <b>{{ "last_exam" | trans  }}</b> : {{ student.last_exam }}
+              </td>
+              <td>
+                <b>{{ "currency" | trans }}</b> : {{ 'جنيه مصرى' }}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+
+          <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+            <div class="custom-panel-title" >{{ "balance info" | trans }}</div>
+            <div class="custom-panel-body w3-display-container"  >
+              <table class="table">
+                <tr>
+                  <td>
+                    <b>{{ "old_balance" | trans  }}</b> : {{ student.old_balance | currency: ' جنيه ' }}
+                  </td>
+                  <td>
+                    <b>{{ "current_balance" | trans  }}</b> : {{ student.current_balance | currency: ' جنيه ' }}
+                  </td>
+                  <td>
+                    <b>{{ "total_balance" | trans  }}</b> : {{ student.current_balance_total | currency: ' جنيه ' }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>{{ "paid_balance" | trans }}</b> : {{ student.paids | currency: ' جنيه ' }}
+                  </td>
+                  <td>
+                    <b>{{ "rewords_discounts" | trans }}</b> : {{ student.discount_total | currency: ' جنيه ' }}
+                  </td>
+                  <td>
+                    <b>{{ "student_balance" | trans }}</b> : {{ student.student_balance | currency: ' جنيه ' }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+            <div class="custom-panel-title" >{{ "academic year expense" | trans }}</div>
+            <div class="custom-panel-body"  >
+              <ul class="w3-ul">
+                <li *ngFor="let item of academicYearExpenses index as i" class="w3-display-container" >
+                  <span style="padding-right: 3px" class="w3-"  >{{ item.name }}</span>
+                  <span class="w3-display-topleft w3-text-red">
+                    {{ item.total | currency: ' جنيه ' }}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-panel w3-display-container w3-round application-panel student-info-panel">
+        <div class="custom-panel-title" >{{ "student info" | trans }}</div>
+        <div class="custom-panel-body w3-display-container"  >
+          <table class="table table-bordered"  id="printable" style="direction: rtl!important;width: 100%" >
+            <tr>
+              <th>{{ "#" }}</th>
+              <th>{{ "date" | trans }}</th>
+              <th>{{ "payment code" | trans }}</th>
+              <th>{{ "value" | trans }}</th>
+              <th>{{ "type" | trans }}</th>
+              <th>{{ "payment_name" | trans }}</th>
+              <th></th>
+            </tr>
+
+            <tr *ngFor="let item of payments.details index as i"  >
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.date }}</td>
+              <td>{{ item.id }}</td>
+              <td>{{ item.value | currency: ' جنيه ' }}</td>
+              <td>{{ "payment_type_"+ item.model_type | trans }}</td>
+              <td>{{ item.model_object? item.model_object.name : '' }}</td>
+              <td>
+                <button mat-button color="green" class="w3-text-green" style="padding: 0px!important;min-width: 20!important;line-height: 0!important" (click)="showPayment(item)" >
+                  <i class="fa fa-desktop"></i>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+
+
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<app-student-service [safeObject]="student" ></app-student-service>
+
+<!-- payment receipt -->
+<div class="modal fade" tabindex="-1" role="dialog" id="paymentShowModal" >
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ "payment details" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <tr>
+            <th>{{ "date" | trans }} </th>
+            <td>
+              {{ selectedPayment.date }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "payment code" | trans }} </th>
+            <td>
+              {{ selectedPayment.id }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "student_code" | trans }} </th>
+            <td>
+              {{ selectedPayment.code }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "student_name" | trans }} </th>
+            <td>
+              {{ selectedPayment.name }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "level" | trans }} </th>
+            <td>
+              {{ selectedPayment.level? selectedPayment.level.name : selectedPayment.level_id }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "division" | trans }} </th>
+            <td>
+              {{ selectedPayment.division? selectedPayment.division.name : selectedPayment.division_id }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "value" | trans }} </th>
+            <td>
+              {{ selectedPayment.value | currency: ' جنيه ' }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "type" | trans }} </th>
+            <td>
+              {{ "payment_type_"+ selectedPayment.model_type | trans }}
+            </td>
+          </tr>
+          <tr>
+            <th>{{ "payment_name" | trans }} </th>
+            <td>
+              {{ selectedPayment.model_object? selectedPayment.model_object.name : '' }}
+            </td>
+          </tr>
+         <ng-container *ngIf="selectedPayment.model_type" >
+          <tr *ngIf="selectedPayment.model_type == 'academic_year_expense'" >
+            <th>{{ "wz" | trans }} </th>
+            <td>
+              <ng-container>
+                {{ selectedPayment.model_object? selectedPayment.model_object.wz_value : 0 }}
+              </ng-container>
+            </td>
+          </tr>
+         </ng-container>
+          <tr>
+            <th>{{ "total" | trans }} </th>
+            <td>
+              {{ (selectedPayment.value + selectedPayment.wz_value) | currency: ' جنيه ' }}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" mat-raised-button color="default" style="margin:5px" data-dismiss="modal">{{ "close" | trans }}</button>
+        <button type="button" mat-raised-button color="primary" style="margin:5px" (click)="printPayment()" >{{ "print" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!-- discount requests -->
+<div class="modal fade" tabindex="-1" role="dialog" id="discountShowModal" >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ "discount requests" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+           <tr>
+             <th>#</th>
+             <th>{{ "discount_type" | trans }}</th>
+             <th>{{ "reason" | trans }}</th>
+             <th>{{ "student_affairs_notes" | trans }}</th>
+             <th>{{ "user" | trans }}</th>
+             <th>{{ "value" | trans }}</th>
+             <th></th>
+           </tr>
+
+           <tr *ngFor="let item of discountRequests index as i" >
+             <ng-container *ngIf="item.deleted != 1" >
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.discount_type? item.discount_type.name : '' }}</td>
+              <td>{{ item.reason }}</td>
+              <td>{{ item.student_affairs_notes }}</td>
+              <td>{{ item.user? item.user.name : '' }}</td>
+              <td>
+                <input type="number" *ngIf="item.paid != 1" [(ngModel)]="item.value" style="width: 70px" >
+                <span  *ngIf="item.paid == 1" class="w3-text-red" >{{ item.value | currency: ' جنية ' }}</span>
+              </td>
+              <td>
+               <button mat-raised-button class="w3-green" *ngIf="item.paid != 1"  (click)="performDiscount(item)" >
+                 {{ "make_discount" | trans }}
+               </button>
+               <button mat-button color="warn" *ngIf="item.paid != 1"  (click)="removeDiscount(item)" >
+                 <i class="fa fa-trash" ></i>
+               </button>
+              </td>
+             </ng-container>
+           </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" mat-raised-button color="default" style="margin:5px" data-dismiss="modal">{{ "close" | trans }}</button>
+        <button type="button" mat-raised-button color="primary" style="margin:5px" (click)="printPayment()" >{{ "print" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

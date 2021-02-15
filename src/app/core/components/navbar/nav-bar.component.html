@@ -1,0 +1,153 @@
+<header>
+  <nav style="height: 40px;" >
+      <div class="fixed-nav" style="height: 40px;" >
+          <input type="checkbox" id="mobile-nav-check" class="invisible-checkbox" tab-index="-1" />
+          <!-- Fix tabbing on desktop -->
+          <label for="mobile-nav-check" class="burger"></label>
+          <div class="top hidden"  >
+              <div class="container ">
+
+                  <div class="w3-left" style="text-align: center;font-size: 13px;" >
+                    <b>وزارة التعليم العالى
+                     المعهد العالى للعلوم الادراية
+                    ببنى سويف</b>
+                </div>
+                  <a href="#" class="feature-button  logo w3-hide-small	">
+                    <img src="../../../../assets/img/logo.png" width="50px" >
+                  </a>
+              </div>
+          </div>
+          <div class="bottom">
+              <div class="container">
+                  <ul class="navigation" style="float: none;" >
+                      <li class="waves-effect waves-white text-right w3-hide-large w3-hide-medium	">
+                        <img src="../../../../assets/img/logo.png" width="50px" >
+                      </li>
+                      <li class="pointer"></li>
+                      <li class="waves-effect waves-white" *ngIf="canAccessStudentAffair()" >
+                        <a routerLink="/affairs" class="dropdown-toggle" data-toggle="dropdown">{{ "student affairs" | trans }}</a>
+                      </li>
+                      <li class="waves-effect waves-white" *ngIf="canAccessSafe() && !canAccessAccountSettings()" >
+                        <a routerLink="/account/safe" class="dropdown-toggle" data-toggle="dropdown">{{ "stores" | trans }}</a>
+                      </li>
+                      <li class="waves-effect waves-white text-right" *ngIf="(canAccessSafe() && canAccessAccountSettings()) || canAccessAccountSettings()">
+                        <div class="w3-dropdown-hover" style="background-color: transparent;"  >
+                          <a class="dropdown-toggle">
+                           {{ "account" | trans }} <span class="caret"></span>
+                          </a>
+                          <div class="w3-dropdown-content w3-bar-block w3-border w3-text-black" style="position: fixed;" >
+                             <a  *ngIf="canAccessSafe()" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/account/safe" >{{ "stores" | trans }}</a>
+                             <a *ngIf="canAccessAccountSettings()" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/account/setting" >{{ "settings" | trans }}</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="waves-effect waves-white text-right" *ngIf="canAccessCardExport()">
+                        <div class="w3-dropdown-hover" style="background-color: transparent;"  >
+                          <a class="dropdown-toggle">
+                           {{ "card export unit" | trans }} <span class="caret"></span>
+                          </a>
+                          <div class="w3-dropdown-content w3-bar-block w3-border w3-text-black" style="position: fixed;" >
+                             <a permission="card_export" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/card" >{{ "card export unit" | trans }}</a>
+                             <a permission="card_export_report" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/card/report/card-export" >{{ "card export report" | trans }}</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="waves-effect waves-white text-right" *ngIf="canAccessAcademic()">
+                        <div class="w3-dropdown-hover" style="background-color: transparent;"  >
+                          <a class="dropdown-toggle">
+                           {{ "academic" | trans }} <span class="caret"></span>
+                          </a>
+                          <div class="w3-dropdown-content w3-bar-block w3-border w3-text-black" style="position: fixed;" >
+                             <a permission="student_register" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/academic/student-register-course" >{{ "student_register_course" | trans }}</a>
+                             <a href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/academic/plan" >{{ "academic_plan" | trans }}</a>
+                             <a permission="academic_setting" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/academic/setting" >{{ "academic_setting" | trans }}</a>
+                             <a permission="open_course" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/academic/open-course" >{{ "open_courses" | trans }}</a>
+                             <a permission="doctor_read" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/academic/doctors" >{{ "doctors" | trans }}</a>
+                             <a permission="control" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/academic/student-result" >{{ "control" | trans }}</a>
+                             <a permission="control_report" href="#" class="w3-bar-item w3-button w3-text-black" routerLink="/academic/control-report" >{{ "control report" | trans }}</a>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="waves-effect waves-white" *ngIf="canAccessMainSettings()">
+                        <a routerLink="/settings" class="dropdown-toggle" data-toggle="dropdown">{{ "main_settings" | trans }}  </a>
+                      </li>
+                      <li class="waves-effect waves-white" *ngIf="canAccessMilitary()">
+                        <a routerLink="/military" class="dropdown-toggle" data-toggle="dropdown">{{ "military" | trans }}  </a>
+                      </li>
+                      <li class="waves-effect waves-white" *ngIf="canAccessUsers()">
+                        <a routerLink="/users" class="dropdown-toggle" data-toggle="dropdown">{{ "users" | trans }}  </a>
+                      </li>
+                      <!--
+                      <li class="waves-effect waves-white">
+                        <a routerLink="/users" class="dropdown-toggle" data-toggle="dropdown">{{ "users" | trans }}  </a>
+                      </li>
+                      -->
+                    <li
+                    style="float: left!important"
+                    (click)="logout()"
+                    class="waves-effect waves-white w3-dropdown-hover">
+                      <!-- Menu toggle button -->
+                      <a   class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-sign-out"></i>
+                      </a>
+                    </li>
+                    <li
+                    style="float: left!important"
+                    class="dropdown notifications-menu waves-effect waves-white w3-dropdown-hover">
+                      <!-- Menu toggle button -->
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="label label-warning">{{ notifications.length > 0? notifications.length : '' }}</span>
+                      </a>
+                      <div
+                      class="w3-ul w3-dropdown-content w3-bar-block w3-border w3-text-black w3-card"
+                      style="position: fixed;left: 10%;width: 300px">
+                          <!-- Inner Menu: contains the notifications -->
+                          <ul class="menu w3-ul w3-block">
+                            <li class="w3-bar-item w3-text-black text-center w3-border-bottom w3-border-light-gray" style="text-align: center!important;" >{{ message }}</li>
+                            <li class="w3-bar-item w3-text-black text-center w3-border-bottom w3-border-light-gray" style="text-align: center!important;height: 200px;overflow: auto;" >
+                              <ul class="w3-ul">
+                                <li
+                                style="padding: 0px!important"
+                                class="w3-bar-item w3-text-black w3-border-bottom w3-border-light-gray"
+                                *ngFor="let item of notifications index as i" ><!-- start notification -->
+
+                                  <div class="media">
+                                      <div class="media-left">
+                                        <a href="#">
+                                            <i
+                                            style="padding: 0px!important;"
+                                            class="w3-text-black text-right {{ item.icon? item.icon : 'fa fa-bell-o' }}"></i>
+                                        </a>
+                                      </div>
+                                      <div class="media-body"
+                                      style="text-align: right!important;line-height: 14px!important;padding-top:10px" >
+                                        {{ item.body }}
+                                      </div>
+                                    </div>
+                                </li>
+                              </ul>
+                            </li>
+                            <li
+                            class="w3-bar-item w3-button w3-text-black text-center w3-border-bottom w3-border-light-gray"
+                            style="text-align: center!important;padding: 0px!important">{{ "View all" | trans }}</li>
+                            <!-- end notification -->
+                          </ul>
+                      </div>
+                    </li>
+                    <!-- profile item -->
+                    <li
+                    style="float: left!important"
+                    class="dropdown notifications-menu waves-effect waves-white w3-dropdown-hover">
+                      <!-- Menu toggle button -->
+                      <a routerLink="/profile"  class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user-circle"></i>
+                      </a>
+                    </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </nav>
+</header>

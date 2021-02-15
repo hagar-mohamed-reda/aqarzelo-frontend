@@ -1,0 +1,25 @@
+<div class="modal " id="updateStudentInfo" tabindex="-1" role="dialog"   >
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content w3-animate-top">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">{{ "update student info" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <tr>
+            <th>{{ "is_refund" | trans }}</th>
+            <td>
+              <mat-slide-toggle
+              (change)="toggleIsRefund()"
+              [checked]="safeObject.is_refund == 1" ></mat-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer text-right">
+        <button type="button" class="btn btn-default"  class="close" data-dismiss="modal" aria-label="Close" >{{ "close" | trans }}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

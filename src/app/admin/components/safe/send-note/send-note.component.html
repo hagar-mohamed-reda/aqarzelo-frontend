@@ -1,0 +1,20 @@
+
+<div class="modal fade" id="notesModal"   tabindex="-1" role="dialog"   >
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content material-shadow">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="doc.jq('#notesModal').modal('hide')"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ "write a notes for student" | trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <textarea class="form-control" [(ngModel)]="newNotes" ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="doc.jq('#notesModal').modal('hide')"  >{{ "close" | trans }}</button>
+        <button type="button" class="btn btn-primary fa fa-send" [disabled]="newNotesUpdate" (click)="sendNotes()" > {{ "send notes" | trans }} </button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
