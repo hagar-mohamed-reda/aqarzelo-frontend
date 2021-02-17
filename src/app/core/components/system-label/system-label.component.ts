@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationSettingService } from 'src/app/adminision/services/application-setting.service';
 import { Cache } from 'src/app/shared/cache';
 import { Theme } from 'src/app/shared/helpers/theme';
 import { SystemSettingService } from '../../services/system-setting.service';

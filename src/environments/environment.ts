@@ -8,7 +8,7 @@ export const environment = {
   // http://localhost/samsa-backend/public
   // window.location.hostname
   //192.168.43.159
-  apiUrl: 'http://'+ window.location.hostname  +'/samsa-backend/public/api',
+  apiUrl: 'http://'+ window.location.hostname  +'/aqarzelo-backend/public/api',
   backEndPublicUrl: 'http://localhost:4000/',
   googleApiKey: 'AIzaSyAtCTUfmq6JOFrE9Ib_HPEPFhUE9VdwcEs',
   frontEndPublicUrl: 'http://127.0.0.1:4200/'

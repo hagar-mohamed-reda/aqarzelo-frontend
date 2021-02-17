@@ -13,13 +13,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 import { TranslationService } from './shared/services/translation.service';
-import { Cache } from './shared/cache';
-import { Translation } from './shared/translation';
-import { LevelService } from './account/services/level.service';
-import { DivisionService } from './account/services/division.service';
-import { TermService } from './account/services/term.service';
-import { Message } from './shared/message';
-import { ApplicationSettingService } from './adminision/services/application-setting.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import {MatTableModule} from '@angular/material/table';
@@ -29,8 +22,6 @@ import {MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION} from '@angular/material/ch
 import {MatButtonModule} from '@angular/material/button';
 import { DataTablesModule } from '../../node_modules/angular-datatables';
 import { SystemLabelComponent } from './core/components/system-label/system-label.component';
-import { UserService } from './user/services/user.service';
-import { RoleService } from './user/services/role.service';
 
 @NgModule({
   declarations: [
@@ -64,15 +55,9 @@ import { RoleService } from './user/services/role.service';
   ],
   providers: [
     httpInterceptorProviders,
-    ApplicationSettingService,
     TranslationService,
-    LevelService,
-    DivisionService,
-    TermService,
     AuthService,
     AuthGuestService,
-    UserService,
-    RoleService,
     {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'}
   ],
   bootstrap: [AppComponent]

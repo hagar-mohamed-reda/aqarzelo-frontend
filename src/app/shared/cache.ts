@@ -1,6 +1,6 @@
 export class Cache {
 
-  private static CACHE_KEY = 'samsa_';
+  private static CACHE_KEY = 'aqarzelo_';
 
   /**
    * store data in locale storage

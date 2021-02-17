@@ -6,6 +6,7 @@
 
 body {
   background-color: #fafafa;
+  overflow: hidden;
 }
 
 .material-shadow,
@@ -196,11 +197,72 @@ table, tr {
 }
 
 
-.modal  {
-  transform:translate3d(0,0,0)!important;
-  -webkit-transform:translate3d(0,0,0)!important;
+.app-content {
+  background-color: #fafafa!important;
+  margin-right: 100px
 }
 
-.modal.fade .modal-dialog {
-  transform: none!important;
+
+.app-select, .app-form {
+  width: 100%;
+  border-radius: 6px;
+  padding: 8px 16px!important;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.app-button {
+  border-radius: 5em!important;
+}
+
+
+.light-gray {
+  background-color: #fafafa!important;
+}
+
+.circle {
+  border-radius: 5em!important;
+}
+
+
+.theme-dark {
+  background-color: #02A2A7!important;
+  color: white;
+}
+
+.theme-semi-dark {
+  background-color: #02A2A7!important;
+  color: white;
+}
+
+.theme-light {
+  background-color: #02a2a7!important;
+  color: black;
+}
+
+.swal2-popup {
+  padding: 30px!important;
+}
+
+.swal2-actions:not(.swal2-loading) .swal2-styled {
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.swal2-actions {
+  margin-top: 30px!important;
+}
+
+
+
+.theme-text-dark {
+  color: #02A2A7!important;
+}
+
+.theme-text-semi-dark {
+  color: #02A2A7!important;
+}
+
+.theme-text-light {
+  color: #02a2a7!important;
 }

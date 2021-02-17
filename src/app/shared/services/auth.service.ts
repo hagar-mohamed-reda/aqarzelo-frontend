@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { IUserLogin } from '../models/IUserLogin';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -21,11 +20,14 @@ export class AuthService {
   }
 
   login(userLogin: any)  {
-    return this.http.post('auth/login', userLogin);
+    let form = new FormData;
+    form.append('phone', userLogin.phone);
+    form.append('password', userLogin.password);
+    return this.http.post('admin/sign', form);
   }
 
   confirmEmail(confirmEmail: { code: string }) {
-    return this.http.post('auth/confirmEmail', confirmEmail);
+    return this.http.post('admin/confirmEmail', confirmEmail);
   }
 
   isAuth() {

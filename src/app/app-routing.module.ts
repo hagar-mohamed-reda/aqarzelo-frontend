@@ -13,44 +13,12 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     children: [
       {
-        path: 'student',
-        loadChildren: './student/student.module#StudentModule'
-      },
-      {
-        path: 'academic',
-        loadChildren: './academic/academic.module#AcademicModule'
-      },
-      {
-        path: 'account',
-        loadChildren: './account/account.module#AccountModule'
+        path: 'admin',
+        loadChildren: './admin/admin.module#AdminModule'
       },
       {
         path: 'settings',
         loadChildren: './settings/settings.module#SettingsModule'
-      },
-      {
-        path: 'adminision',
-        loadChildren: './adminision/adminision.module#AdminisionModule'
-      },
-      {
-        path: 'military',
-        loadChildren: './military/military.module#MilitaryModule'
-      },
-      {
-        path: 'profile',
-        component: UserProfileComponent
-      },
-      {
-        path: 'users',
-        loadChildren: './user/user.module#UserModule'
-      },
-      {
-        path: 'affairs',
-        loadChildren: './affairs/affairs.module#AffairsModule'
-      },
-      {
-        path: 'card',
-        loadChildren: './card/card.module#CardModule'
       },
      /* {
         path: 'dashboard',
